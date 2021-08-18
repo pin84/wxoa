@@ -4,7 +4,8 @@ import { get } from '@/plugins/axios'
 
 async function wxconfig() {
 
-  let url = encodeURIComponent(window.location.href.split('#')[0])
+  // let url = encodeURIComponent(window.location.href.split('#')[0])
+  let url = window.location.href.split('#')[0]
 
   let res = await get('wx/sign', { signUrl:url })
   // debug: true, // 开启调试模式,调用的所有api的返回值会在客户端alert出来，若要查看传入的参数，可以在pc端打开，参数信息会通过log打出，仅在pc端时才会打印。
