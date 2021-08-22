@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <div id="nav">
+    <div id="nav" v-if="$store.state.v1.isShowNav">
       <router-link to="/">Home</router-link> |
       <router-link to="/about">About</router-link>
     </div>
@@ -11,9 +11,23 @@
 <script>
 import wxconfig from "./wx/wxconfig";
 export default {
+  data(){
+    return {
+    }
+  },
+
+  created(){
+    this.initPage()
+  },
   async mounted() {
     await wxconfig();
   },
+
+  methods:{
+    initPage(){
+      
+    }
+  }
 };
 </script>
 

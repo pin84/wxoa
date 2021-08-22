@@ -3,13 +3,22 @@ import Vuex from 'vuex'
 
 Vue.use(Vuex)
 
-export default new Vuex.Store({
+const v1 = {
   state: {
+    isShowNav: true
   },
   mutations: {
+    isShowNav(state, params) {
+      state.isShowNav = params
+    },
   },
   actions: {
   },
   modules: {
+  }
+}
+export default new Vuex.Store({
+  modules: {
+    v1
   }
 })
