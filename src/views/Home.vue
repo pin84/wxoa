@@ -5,6 +5,8 @@
 
     <van-button type="primary" @click="sendRequest">主要按钮</van-button>
     <hr />
+    <van-button type="primary" @click="test">test</van-button>
+    <hr />
     <!-- <div class="box">
       <LoginForm />
     </div> -->
@@ -28,7 +30,9 @@ export default {
   },
 
   methods: {
- 
+    test(){
+      this.$router.push('/qrcode')
+    },
     async sendRequest() {
       this.$wx.scanQRCode({
         needResult: 0, // 默认为0，扫描结果由微信处理，1则直接返回扫描结果，
