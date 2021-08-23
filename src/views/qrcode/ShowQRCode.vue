@@ -1,10 +1,9 @@
 <template>
-  <div class="show-qrcode">
-    <img class="img" :src="qrcodeUrl" alt="" />
-
-    <van-button @click="saveQRCode" class="btn" round type="primary"
-      >下载二维码</van-button
-    >
+  <div class="show-qrcode" v-if="qrcodeUrl != ''">
+    <div class="img-box">
+      <img class="img" :src="qrcodeUrl" alt="" />
+    </div>
+    <div class="tip">长按二维码保存到手机</div>
   </div>
 </template>
 
@@ -18,24 +17,7 @@ export default {
   },
 
   methods: {
-    saveQRCode() {
-      wx.uploadImage({
-        localId: "", // 需要上传的图片的本地ID，由chooseImage接口获得
-        isShowProgressTips: 1, // 默认为1，显示进度提示
-        success: function (res) {
-          var serverId = res.serverId; // 返回图片的服务器端ID
-          this.$wx.downloadImage({
-            serverId: res.serverId, // 需要下载的图片的服务器端ID，由uploadImage接口获得
-            isShowProgressTips: 1, // 默认为1，显示进度提示
-            success: function (res) {
-              var localId = res.localId; // 返回图片下载后的本地ID
-
-              console.log('--本地ID-',localId);
-            },
-          });
-        },
-      });
-    },
+ 
   },
 };
 </script>
@@ -46,14 +28,21 @@ export default {
   max-width: 80vw;
   max-height: 80vw;
   margin: 0 auto;
-  border: 1px solid red;
+  display: flex;
+  flex-direction: column;
+  // justify-content: center;
+  align-items: center;
+  .tip{
+    color:gray;
+    font-size: 12px;
+    flex: 0 0 20px;
+  }
+  .img-box {
+    width: 90%;
+    .img {
+      width: 100%;
+    }
+  }
 
-  .img {
-    width: 100%;
-  }
-  .btn {
-    width: 80%;
-    margin-top: 10px;
-  }
 }
 </style>

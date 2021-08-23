@@ -13,16 +13,20 @@
         >{{ btn.text }}</van-button
       >
     </div>
-    <TextQr  @inputText='inputText' />
-    <van-button type="warning" @click="createQRCode">生成二维码</van-button>
+    <TextQr v-if="curBtnIndex == 0"  @inputText='inputText' />
+    <ImageQr  v-if="curBtnIndex == 1" />
+    <van-button class="create-btn" type="warning" @click="createQRCode">生成二维码</van-button>
 
-    <ShowQRCode :qrcodeUrl="qrcodeUrl" />
+    <ShowQRCode v-if="qrcodeUrl != ''"  :qrcodeUrl="qrcodeUrl" />
+
+    <!-- <Support  /> -->
   </div>
 </template>
 
 <script>
 import TextQr from "./TextQr.vue";
 import QRCode from "qrcode";
+import Support from './Support'
 export default {
   data() {
     return {
@@ -42,7 +46,10 @@ export default {
 
   components: {
     TextQr,
+    Support,
     ShowQRCode: () => import("./ShowQRCode.vue"),
+    ImageQr: () => import("./ImageQr.vue"),
+
   },
 
   created(){
@@ -60,6 +67,7 @@ export default {
     },
     changeType(index) {
       this.curBtnIndex = index;
+      this.qrcodeUrl = ''
     },
     inputText(text){
       this.inputContent = text
@@ -88,6 +96,9 @@ export default {
         color: #fff;
       }
     }
+  }
+  .create-btn{
+    margin-bottom: 10px;
   }
 }
 </style>

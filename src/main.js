@@ -3,6 +3,9 @@ import App from './App.vue'
 import router from './router'
 import store from './store'
 
+import '@/assets/style.scss'
+import '@/assets/iconfont.css'
+
 import Vant from 'vant';
 import 'vant/lib/index.css';
 Vue.use(Vant);
