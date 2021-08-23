@@ -29,7 +29,7 @@ const routes = [
 ]
 
 const router = new VueRouter({
-  mode: 'history',
+  mode: 'hash',  // "hash" (浏览器环境) | "abstract" (Node.js 环境) ｜ "history"
   base: process.env.BASE_URL,
   routes
 })
