@@ -24,7 +24,11 @@ async function wxconfig() {
     nonceStr:noncestr, // 必填，生成签名的随机串
     signature,// 必填，签名
     jsApiList: [
-      'scanQRCode'
+      'scanQRCode',
+      'chooseImage',
+      'uploadImage',
+      'downloadImage',
+      'getLocalImgData'
     ] // 必填，需要使用的JS接口列表
   }
 

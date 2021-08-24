@@ -17,33 +17,52 @@
       multiple=""
     /> -->
 
-    <div class="img-box">sfsdf</div>
+    <ImageBox  :imgURL="imgDataUrl" />
+
+    <!-- <div class="img-box"><img src="@/assets/images/wx/WechatIMG75.jpeg" alt="" /></div> -->
   </div>
 </template>
 
 <script>
 import TextQr from "./TextQr.vue";
+import { dataURLtoBlob } from "@/utils/utils.js";
 export default {
   data() {
-    return {};
+    return {
+      imgDataUrl: "",
+    };
   },
 
   components: {
     TextQr,
+    ImageBox:()=>import('@/components/ImageBox.vue')
+  },
+
+  mounted() {
+    this.test();
   },
 
   methods: {
+    test() {
+      dataURLtoBlob("aaaaaa");
+    },
     async uploadimg() {
-      let res = await this.$wx.chooseImage({
+      this.$wx.chooseImage({
         count: 1, // 默认9
         sizeType: ["original", "compressed"], // 可以指定是原图还是压缩图，默认二者都有
         sourceType: ["album", "camera"], // 可以指定来源是相册还是相机，默认二者都有
         success: function (res) {
           var localIds = res.localIds; // 返回选定照片的本地ID列表，localId可以作为img标签的src属性显示图片
+          wx.getLocalImgData({
+            localId: localIds[0], // 图片的localID
+            success: function (res) {
+              this.imgDataUrl = res.localData; // localData是图片的base64数据，可以用img标签显示
+              console.log(this.imgDataUrl);
+            },
+          });
         },
       });
 
-      console.log('---选择相册的图片的ID---',res);
     },
   },
 };
