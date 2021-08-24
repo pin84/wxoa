@@ -53,13 +53,15 @@ export default {
         sourceType: ["album", "camera"], // 可以指定来源是相册还是相机，默认二者都有
         success: function (res) {
           var localIds = res.localIds; // 返回选定照片的本地ID列表，localId可以作为img标签的src属性显示图片
-
           console.log('---localIds-',localIds);
-          wx.getLocalImgData({
+
+            this.imgDataUrl = localIds[0]
+          this.$wx.getLocalImgData({
             localId: localIds[0], // 图片的localID
-            success: function (res) {
+            success:  (res) =>{
               this.imgDataUrl = res.localData; // localData是图片的base64数据，可以用img标签显示
-              console.log('--------------',res);
+              alert('res')
+              console.log('-------imgDataUrl-------',res);
             },
           });
         },
