@@ -57,7 +57,7 @@ export default {
             localId: localIds[0], // 图片的localID
             success: function (res) {
               this.imgDataUrl = res.localData; // localData是图片的base64数据，可以用img标签显示
-              console.log(this.imgDataUrl);
+              console.log('--------------',res);
             },
           });
         },
