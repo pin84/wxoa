@@ -4,6 +4,8 @@
 export default {
 
 
-  getinfo:'user/getinfo'
+  getinfo:'user/getinfo',
+
+  uploadImg:'wx/upload'
 
 }

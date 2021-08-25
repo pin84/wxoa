@@ -1,13 +1,8 @@
 // 将base64转换为文件
 const dataURLtoBlob = async (base64Data, filename) => {
   const base64 = await fetch(base64Data);
-
   const blob = await base64.blob();
-
-  console.log('------blob----',blob);
   return blob
-
-
 }
 
 
@@ -30,9 +25,17 @@ const blobToFile = (theBlob, fileName) => {
   return theBlob;
 }
 
+const fileAppenToFormData = (file,fileName='fileName')=>{
+
+  let formData = new FormData()
+  formData.append(fileName,file)
+
+  return formData
+}
 
 export  {
   dataURLtoBlob,
   // dataURLtoBlob,
-  blobToFile
+  blobToFile,
+  fileAppenToFormData
 }

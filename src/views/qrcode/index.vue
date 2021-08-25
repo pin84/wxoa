@@ -13,11 +13,13 @@
         >{{ btn.text }}</van-button
       >
     </div>
-    <TextQr v-if="curBtnIndex == 0"  @inputText='inputText' />
-    <ImageQr  v-if="curBtnIndex == 1" />
-    <van-button class="create-btn" type="warning" @click="createQRCode">生成二维码</van-button>
+    <TextQr v-if="curBtnIndex == 0" @inputText="inputText" />
+    <ImageQr v-if="curBtnIndex == 1" @changeImg="changeImg" />
+    <van-button class="create-btn" type="warning" @click="createQRCode"
+      >生成二维码</van-button
+    >
 
-    <ShowQRCode v-if="qrcodeUrl != ''"  :qrcodeUrl="qrcodeUrl" />
+    <ShowQRCode v-if="qrcodeUrl != ''" :qrcodeUrl="qrcodeUrl" />
 
     <!-- <Support  /> -->
   </div>
@@ -26,11 +28,13 @@
 <script>
 import TextQr from "./TextQr.vue";
 import QRCode from "qrcode";
-import Support from './Support'
+import Support from "./Support";
+import axios from "axios";
 export default {
   data() {
     return {
-      inputContent:'',
+      imgDataUrl: null, //图片的base64数据
+      inputContent: "",
       qrcodeUrl: "",
       curBtnIndex: 0,
       btnList: [
@@ -49,34 +53,50 @@ export default {
     Support,
     ShowQRCode: () => import("./ShowQRCode.vue"),
     ImageQr: () => import("./ImageQr.vue"),
-
   },
 
-  created(){
-    this.initPage()
+  created() {
+    this.initPage();
   },
 
   methods: {
-    initPage(){
-      this.$store.commit('isShowNav',false)
+    changeImg(imgDataUrl) {
+      this.imgDataUrl = imgDataUrl;
     },
-    createQRCode() {
-      QRCode.toDataURL(this.inputContent, (err, url) => {
-        this.qrcodeUrl = url;
-      });
+    initPage() {
+      this.$store.commit("isShowNav", false);
+    },
+    async createQRCode() {
+      if (this.curBtnIndex) {
+        let blob = await this.$dataURLtoBlob(this.imgDataUrl);
+        let ts = new Date().getTime() + "";
+        let myFile = new File([blob], ts, {
+          type: blob.type,
+        });
+        let formData = this.$fileAppenToFormData(myFile);
+        // let res = await axios.post("http://localhost:3000/wx/upload", formData);
+        let res = await this.$post(this.$api.uploadImg, formData);
+
+        console.log(res);
+      } else {
+        QRCode.toDataURL(this.inputContent, (err, url) => {
+          this.qrcodeUrl = url;
+        });
+      }
     },
     changeType(index) {
       this.curBtnIndex = index;
-      this.qrcodeUrl = ''
+      this.qrcodeUrl = "";
+      this.inputContent = "";
     },
-    inputText(text){
-      this.inputContent = text
-    }
+    inputText(text) {
+      this.inputContent = text;
+    },
   },
 
-  destroyed(){
-     this.$store.commit('isShowNav',true)
-  }
+  destroyed() {
+    this.$store.commit("isShowNav", true);
+  },
 };
 </script>
 
@@ -97,8 +117,8 @@ export default {
       }
     }
   }
-  .create-btn{
-    margin-bottom: 10px;
+  .create-btn {
+    margin: 10px;
   }
 }
 </style>

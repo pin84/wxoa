@@ -1,6 +1,6 @@
 <template>
   <div class="qr-code">
-    <div class="lable" @click="uploadimg">
+    <div v-if="!imgDataUrl" class="lable" @click="uploadimg">
       <i class="iconfont iconzhaoshangxiaochengxu-tupian"></i>
       <div class="text">上传图片</div>
     </div>
@@ -16,10 +16,7 @@
       title=""
       multiple=""
     /> -->
-
-    <ImageBox  :imgURL="imgDataUrl" />
-
-    <!-- <div class="img-box"><img src="@/assets/images/wx/WechatIMG75.jpeg" alt="" /></div> -->
+    <ImageBox v-else @closeImgBox="imgDataUrl = null " :imgURL="imgDataUrl"  />
   </div>
 </template>
 
@@ -29,44 +26,36 @@ import { dataURLtoBlob } from "@/utils/utils.js";
 export default {
   data() {
     return {
-      imgDataUrl: "",
+      imgDataUrl: null,
     };
   },
 
   components: {
     TextQr,
-    ImageBox:()=>import('@/components/ImageBox.vue')
-  },
-
-  mounted() {
-    this.test();
+    ImageBox: () => import("@/components/ImageBox.vue"),
   },
 
   methods: {
-    test() {
-      dataURLtoBlob("aaaaaa");
-    },
     async uploadimg() {
       this.$wx.chooseImage({
         count: 1, // 默认9
         sizeType: ["original", "compressed"], // 可以指定是原图还是压缩图，默认二者都有
         sourceType: ["album", "camera"], // 可以指定来源是相册还是相机，默认二者都有
-        success: function (res) {
+        success:  (res)=> {
           var localIds = res.localIds; // 返回选定照片的本地ID列表，localId可以作为img标签的src属性显示图片
-          console.log('---localIds-',localIds);
+          console.log("---localIds-", localIds);
 
-            this.imgDataUrl = localIds[0]
+          // this.imgDataUrl = localIds[0];
           this.$wx.getLocalImgData({
             localId: localIds[0], // 图片的localID
-            success:  (res) =>{
-              this.imgDataUrl = res.localData; // localData是图片的base64数据，可以用img标签显示
-              alert('res')
-              console.log('-------imgDataUrl-------',res);
+            success: (res) => {
+              let imgDataUrl = res.localData; // localData是图片的base64数据，可以用img标签显示
+              this.imgDataUrl = imgDataUrl
+              this.$emit('changeImg',imgDataUrl)
             },
           });
         },
       });
-
     },
   },
 };
@@ -75,7 +64,7 @@ export default {
 <style lang="scss" scoped>
 .qr-code {
   width: 100%;
-  height: 160px;
+  height: 170px;
   margin: 0 auto;
   border: 1px dashed #f1f1f1;
   box-sizing: border-box;

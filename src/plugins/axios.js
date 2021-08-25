@@ -3,10 +3,11 @@ import qs from 'qs'
 import { baseURL  } from '../config/config';
 
 
+
 const service = axios.create({
   baseURL,
   timeout: 5000,
-
+  headers: { 'Content-Type': 'multipart/form-data' }
 })
 
 
@@ -16,7 +17,7 @@ const service = axios.create({
 service.interceptors.request.use(function (config) {
   // Do something before request is sent
 
-
+  console.log('---config-==',config);
   return config;
 }, function (error) {
   // Do something with request error
@@ -43,7 +44,7 @@ export function get(url, params) {
   })
 }
 export function post(url, params) {
-  return service.get(url, qs.stringify(params))
+  return service.post(url, params)
 }
 
 

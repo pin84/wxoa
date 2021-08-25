@@ -10,14 +10,20 @@ import Vant from 'vant';
 import 'vant/lib/index.css';
 Vue.use(Vant);
 
-import {get} from './plugins/axios.js'
+import {get,post} from './plugins/axios.js'
 import api from './api/index.js'
 
 import wx from 'weixin-js-sdk'
 
+import {dataURLtoBlob,fileAppenToFormData} from '@/utils/utils.js'
+
+
 Vue.prototype.$api = api;
 Vue.prototype.$get = get;
+Vue.prototype.$post = post;
 Vue.prototype.$wx = wx;
+Vue.prototype.$dataURLtoBlob = dataURLtoBlob;
+Vue.prototype.$fileAppenToFormData = fileAppenToFormData;
 
 
 Vue.config.productionTip = false
