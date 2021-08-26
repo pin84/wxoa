@@ -74,8 +74,8 @@ export default {
           type: blob.type,
         });
         let formData = this.$fileAppenToFormData(myFile);
-        // let res = await axios.post("http://localhost:3000/wx/upload", formData);
-        let res = await this.$post(this.$api.uploadImg, formData);
+        let res = await axios.post("http://data.lzhs.top/wx/upload", formData);
+        // let res = await this.$post(this.$api.uploadImg, formData);
 
         console.log(res);
       } else {

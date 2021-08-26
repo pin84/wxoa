@@ -6,7 +6,7 @@ import { baseURL  } from '../config/config';
 
 const service = axios.create({
   baseURL,
-  timeout: 5000,
+  timeout: 50000,
   // headers: { 'Content-Type': 'multipart/form-data' }
 })
 
