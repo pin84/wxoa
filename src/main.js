@@ -15,6 +15,9 @@ import api from './api/index.js'
 
 import wx from 'weixin-js-sdk'
 
+import VConsole from 'vconsole';
+ new VConsole();
+
 import {dataURLtoBlob,fileAppenToFormData} from '@/utils/utils.js'
 
 
