@@ -2,7 +2,7 @@
   <div class="qr-code">
     <div v-if="!imgDataUrl" class="lable" @click="uploadimg">
       <i class="iconfont iconzhaoshangxiaochengxu-tupian"></i>
-      <div class="text">上传图片</div>
+      <div class="text">上传图片a</div>
     </div>
     <!-- <input
       v-show="false"
@@ -44,18 +44,19 @@ export default {
         success:  (res)=> {
           var localIds = res.localIds; // 返回选定照片的本地ID列表，localId可以作为img标签的src属性显示图片
           console.log("---localIds-", localIds);
+          this.imgDataUrl = localIds[0]
 
           // this.imgDataUrl = localIds[0];
-          this.$wx.getLocalImgData({
-            localId: localIds[0], // 图片的localID
-            success: (res) => {
-              console.log('----localIds---',localIds);
-              console.log('----base64---',res);
-              let imgDataUrl = res.localData; // localData是图片的base64数据，可以用img标签显示
-              this.imgDataUrl = imgDataUrl
-              this.$emit('changeImg',imgDataUrl)
-            },
-          });
+          // this.$wx.getLocalImgData({
+          //   localId: localIds[0], // 图片的localID
+          //   success: (res) => {
+          //     console.log('----localIds---',localIds);
+          //     console.log('----base64---',res);
+          //     let imgDataUrl = res.localData; // localData是图片的base64数据，可以用img标签显示
+          //     this.imgDataUrl = imgDataUrl
+          //     this.$emit('changeImg',imgDataUrl)
+          //   },
+          // });
         },
       });
     },
