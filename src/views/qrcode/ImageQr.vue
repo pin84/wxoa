@@ -47,7 +47,7 @@ export default {
           this.$wx.getLocalImgData({
             localId: localIds[0], // 图片的localID
             success: (res) => {
-              console.log('----base64---',res);
+              console.log('----base64---',localIds,res.localData);
               let imgDataUrl = res.localData; // localData是图片的base64数据，可以用img标签显示
               this.imgDataUrl = localIds[0]
               this.$emit('changeImg',imgDataUrl)
