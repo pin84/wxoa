@@ -2,7 +2,7 @@
   <div class="qr-code">
     <div v-if="!imgDataUrl" class="lable" @click="uploadimg">
       <i class="iconfont iconzhaoshangxiaochengxu-tupian"></i>
-      <div class="text">上传图片a</div>
+      <div class="text">上传图片</div>
     </div>
     <!-- <input
       v-show="false"

@@ -1,25 +1,26 @@
 <template>
   <div class="qr-code">
-    <h1>生成二维码</h1>
-
-    <div class="btn-box">
-      <van-button
-        class="btn"
-        :class="{ active: index == curBtnIndex }"
-        v-for="(btn, index) in btnList"
-        :key="index"
-        size="small"
-        @click="changeType(index)"
-        >{{ btn.text }}</van-button
+    <div v-if="qrcodeUrl == '' ">
+      <h1>生成二维码</h1>
+      <div class="btn-box">
+        <van-button
+          class="btn"
+          :class="{ active: index == curBtnIndex }"
+          v-for="(btn, index) in btnList"
+          :key="index"
+          size="small"
+          @click="changeType(index)"
+          >{{ btn.text }}</van-button
+        >
+      </div>
+      <TextQr v-if="curBtnIndex == 0" @inputText="inputText" />
+      <ImageQr v-if="curBtnIndex == 1" @changeImg="changeImg" />
+      <van-button class="create-btn" type="warning" @click="createQRCode"
+        >生成二维码</van-button
       >
     </div>
-    <TextQr v-if="curBtnIndex == 0" @inputText="inputText" />
-    <ImageQr v-if="curBtnIndex == 1" @changeImg="changeImg" />
-    <van-button class="create-btn" type="warning" @click="createQRCode"
-      >生成二维码</van-button
-    >
 
-    <ShowQRCode v-if="qrcodeUrl != ''" :qrcodeUrl="qrcodeUrl" />
+    <ShowQRCode v-else :qrcodeUrl="qrcodeUrl" @reCreata="qrcodeUrl = '' "/>
 
     <!-- <Support  /> -->
   </div>
@@ -74,10 +75,12 @@ export default {
           type: blob.type,
         });
         let formData = this.$fileAppenToFormData(myFile);
-        let res = await axios.post("http://data.lzhs.top/wx/upload", formData);
-        // let res = await this.$post(this.$api.uploadImg, formData);
+        // let res = await axios.post("http://data.lzhs.top/wx/upload", formData);
+        let res = await this.$post(this.$api.uploadImg, formData);
 
-        console.log(res);
+        QRCode.toDataURL(res.data, (err, url) => {
+          this.qrcodeUrl = url;
+        });
       } else {
         QRCode.toDataURL(this.inputContent, (err, url) => {
           this.qrcodeUrl = url;
