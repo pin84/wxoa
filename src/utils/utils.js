@@ -3,6 +3,7 @@ const base64ToBlob = (imgURL, quality = 0.3) => {
     let img = new Image()
     img.src = imgURL
     img.onload = () => {
+      console.log('-1--onload--');
       let canvas = document.createElement("canvas");
       let ctx = canvas.getContext("2d");
       canvas.height = img.height;
@@ -10,6 +11,7 @@ const base64ToBlob = (imgURL, quality = 0.3) => {
       ctx.drawImage(img, 0, 0, img.width, img.height);
       canvas.toBlob(
         blob => {
+          console.log('-2--toBlob--');
           resolve(blob);
         },
         "image/jpeg",

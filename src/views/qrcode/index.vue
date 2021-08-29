@@ -1,6 +1,6 @@
 <template>
   <div class="qr-code">
-    <div v-if="qrcodeUrl == '' ">
+    <div v-if="qrcodeUrl == ''">
       <h1>生成二维码</h1>
       <div class="btn-box">
         <van-button
@@ -20,8 +20,7 @@
       >
     </div>
 
-    <ShowQRCode v-else :qrcodeUrl="qrcodeUrl" @reCreata="qrcodeUrl = '' "/>
-
+    <ShowQRCode v-else :qrcodeUrl="qrcodeUrl" @reCreata="qrcodeUrl = ''" />
   </div>
 </template>
 
@@ -69,12 +68,12 @@ export default {
         // let blob = await this.$dataURLtoBlob(this.imgDataUrl);
         let blob = await this.$base64ToBlob(this.imgDataUrl);
 
-
+        console.log("-3--onload--");
         let ts = new Date().getTime() + "";
         let myFile = new File([blob], ts, {
           type: blob.type,
         });
-        console.log('---myFile---',myFile);
+        console.log("---myFile---", myFile);
         let formData = this.$fileAppenToFormData(myFile);
         // let res = await axios.post("http://data.lzhs.top/wx/upload", formData);
         let res = await this.$post(this.$api.uploadImg, formData);
