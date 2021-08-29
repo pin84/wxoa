@@ -1,23 +1,24 @@
-// 将base64转换为文件
-const dataURLtoBlob = async (base64Data, filename) => {
-  const base64 = await fetch(base64Data);
-  const blob = await base64.blob();
-  return blob
+const base64ToBlob = (imgURL, quality = 0.3) => {
+  return new Promise((resolve, reject) => {
+    let img = new Image()
+    img.src = imgURL
+    img.onload = () => {
+      let canvas = document.createElement("canvas");
+      let ctx = canvas.getContext("2d");
+      canvas.height = img.height;
+      canvas.width = img.width;
+      ctx.drawImage(img, 0, 0, img.width, img.height);
+      canvas.toBlob(
+        blob => {
+          resolve(blob);
+        },
+        "image/jpeg",
+        quality
+      );
+    };
+  });
 }
 
-
-// // 将base64转换为blob
-// const dataURLtoBlob = (dataurl) => {
-//   let arr = dataurl.split(","),
-//     mime = arr[0].match(/:(.*?);/)[1],
-//     bstr = atob(arr[1]),
-//     n = bstr.length,
-//     u8arr = new Uint8Array(n);
-//   while (n--) {
-//     u8arr[n] = bstr.charCodeAt(n);
-//   }
-//   return new Blob([u8arr], { type: mime });
-// }
 // 将blob转换为file
 const blobToFile = (theBlob, fileName) => {
   theBlob.lastModifiedDate = new Date();
@@ -25,17 +26,14 @@ const blobToFile = (theBlob, fileName) => {
   return theBlob;
 }
 
-const fileAppenToFormData = (file,fileName='fileName')=>{
-
+const fileAppenToFormData = (file, fileName = 'fileName') => {
   let formData = new FormData()
-  formData.append(fileName,file)
-
+  formData.append(fileName, file)
   return formData
 }
 
-export  {
-  dataURLtoBlob,
-  // dataURLtoBlob,
+export {
   blobToFile,
-  fileAppenToFormData
+  fileAppenToFormData,
+  base64ToBlob
 }

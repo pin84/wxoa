@@ -69,11 +69,15 @@ export default {
     },
     async createQRCode() {
       if (this.curBtnIndex) {
-        let blob = await this.$dataURLtoBlob(this.imgDataUrl);
+        // let blob = await this.$dataURLtoBlob(this.imgDataUrl);
+        let blob = await this.$base64ToBlob(this.imgDataUrl);
+
+
         let ts = new Date().getTime() + "";
         let myFile = new File([blob], ts, {
           type: blob.type,
         });
+        console.log('---myFile---',myFile);
         let formData = this.$fileAppenToFormData(myFile);
         // let res = await axios.post("http://data.lzhs.top/wx/upload", formData);
         let res = await this.$post(this.$api.uploadImg, formData);

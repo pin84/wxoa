@@ -19,15 +19,15 @@ import wx from 'weixin-js-sdk'
 import VConsole from 'vconsole';
 new VConsole();
 
-import {dataURLtoBlob,fileAppenToFormData} from '@/utils/utils.js'
+import {dataURLtoBlob,fileAppenToFormData,base64ToBlob} from '@/utils/utils.js'
 
 
 Vue.prototype.$api = api;
 Vue.prototype.$get = get;
 Vue.prototype.$post = post;
 Vue.prototype.$wx = wx;
-Vue.prototype.$dataURLtoBlob = dataURLtoBlob;
 Vue.prototype.$fileAppenToFormData = fileAppenToFormData;
+Vue.prototype.$base64ToBlob = base64ToBlob;
 
 
 Vue.config.productionTip = false
