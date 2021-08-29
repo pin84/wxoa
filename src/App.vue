@@ -38,10 +38,13 @@ export default {
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
+  height: 100vh;
+  box-sizing: border-box;
 }
 
 #nav {
-  padding: 30px;
+  /* padding: 30px; */
+  box-sizing: border-box;
 }
 
 #nav a {

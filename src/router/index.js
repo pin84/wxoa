@@ -26,6 +26,14 @@ const routes = [
     // which is lazy-loaded when the route is visited.
     component: () => import('@/views/qrcode/index.vue')
   },
+  {
+    path: '/donate',
+    name: 'donate',
+    // route level code-splitting
+    // this generates a separate chunk (about.[hash].js) for this route
+    // which is lazy-loaded when the route is visited.
+    component: () => import('@/views/donate/index.vue')
+  },
 ]
 
 const router = new VueRouter({

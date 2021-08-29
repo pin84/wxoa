@@ -22,14 +22,12 @@
 
     <ShowQRCode v-else :qrcodeUrl="qrcodeUrl" @reCreata="qrcodeUrl = '' "/>
 
-    <!-- <Support  /> -->
   </div>
 </template>
 
 <script>
 import TextQr from "./TextQr.vue";
 import QRCode from "qrcode";
-import Support from "./Support";
 import axios from "axios";
 export default {
   data() {
@@ -51,7 +49,6 @@ export default {
 
   components: {
     TextQr,
-    Support,
     ShowQRCode: () => import("./ShowQRCode.vue"),
     ImageQr: () => import("./ImageQr.vue"),
   },
