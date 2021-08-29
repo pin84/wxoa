@@ -1,4 +1,5 @@
 const base64ToBlob = (imgURL, quality = 0.3) => {
+  console.log('----00000---');
   return new Promise((resolve, reject) => {
     let img = new Image()
     img.src = imgURL

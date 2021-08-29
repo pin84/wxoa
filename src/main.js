@@ -19,7 +19,7 @@ import wx from 'weixin-js-sdk'
 import VConsole from 'vconsole';
 new VConsole();
 
-import {dataURLtoBlob,fileAppenToFormData,base64ToBlob} from '@/utils/utils.js'
+import {fileAppenToFormData,base64ToBlob} from '@/utils/utils.js'
 
 
 Vue.prototype.$api = api;
