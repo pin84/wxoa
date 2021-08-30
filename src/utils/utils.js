@@ -2,12 +2,21 @@ const base64ToBlob = async (dataURL) => {
   var img = new Image();   // Create new img element
   img.setAttribute("crossOrigin", "Anonymous");
   img.src = dataURL; // 设置图片源地址
-  return new Promise((res, rej) => {
+  return new Promise((resolve, reject) => {
     img.onload = () => {
       console.log('--logd--', img);
+      let canvas = document.createElement("canvas");
+      let ctx = canvas.getContext("2d");
+      canvas.height = img.height;
+      canvas.width = img.width;
+      ctx.drawImage(img, 0, 0, img.width, img.height);
+      canvas.toBlob(blob => {
+        resolve(blob);
+      }, "image/jpeg",0.3);
     };
     img.onerror = (err) => {
       console.log('--err---', err);
+      reject(err)
     };
   });
 }
