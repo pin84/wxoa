@@ -1,6 +1,6 @@
 <template>
   <div class="qr-code">
-    <div v-if="qrcodeUrl == ''">
+    <div v-if="isShowQrcode">
       <h1>生成二维码</h1>
       <div class="btn-box">
         <van-button
@@ -20,7 +20,7 @@
       >
     </div>
 
-    <ShowQRCode v-else :qrcodeUrl="qrcodeUrl" @reCreata="qrcodeUrl = ''" />
+    <ShowQRCode v-else :qrcodeUrl="qrcodeUrl" @reCreata="reCreata" />
   </div>
 </template>
 
@@ -28,10 +28,12 @@
 import TextQr from "./TextQr.vue";
 import QRCode from "qrcode";
 import axios from "axios";
+import { Dialog } from 'vant';
 export default {
   data() {
     return {
-      imgDataUrl: null, //图片的base64数据
+      isShowQrcode:true,
+      imgDataUrl: '', //图片的base64数据
       inputContent: "",
       qrcodeUrl: "",
       curBtnIndex: 0,
@@ -57,6 +59,11 @@ export default {
   },
 
   methods: {
+    reCreata(){
+      this.imgDataUrl = ''
+      this.inputContent = ''
+      this.isShowQrcode = true
+    },
     changeImg(imgDataUrl) {
       this.imgDataUrl = imgDataUrl;
     },
@@ -64,28 +71,29 @@ export default {
       this.$store.commit("isShowNav", false);
     },
     async createQRCode() {
-      if (this.curBtnIndex) {
-        // let blob = await this.$dataURLtoBlob(this.imgDataUrl);
-        let blob = await this.$base64ToBlob(this.imgDataUrl);
+      if(this.imgDataUrl == '' && this.inputContent== '' ){
+        Dialog({ message: '请输入内容或选择图片' });
+        return 
+      }
 
-        console.log(blob);
+      let str = "";
+      if (this.curBtnIndex) {
+        let blob = await this.$base64ToBlob(this.imgDataUrl);
         let ts = new Date().getTime() + "";
         let myFile = new File([blob], ts, {
           type: blob.type,
         });
-        console.log("---myFile---", myFile);
         let formData = this.$fileAppenToFormData(myFile);
-        // let res = await axios.post("http://data.lzhs.top/wx/upload", formData);
         let res = await this.$post(this.$api.uploadImg, formData);
-
-        QRCode.toDataURL(res.data, (err, url) => {
-          this.qrcodeUrl = url;
-        });
+        str = res.data;
       } else {
-        QRCode.toDataURL(this.inputContent, (err, url) => {
-          this.qrcodeUrl = url;
-        });
+        str = this.inputContent;
       }
+
+      QRCode.toDataURL(str, (err, url) => {
+        this.qrcodeUrl = url;
+      });
+      this.isShowQrcode = false
     },
     changeType(index) {
       this.curBtnIndex = index;

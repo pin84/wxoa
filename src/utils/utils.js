@@ -22,7 +22,7 @@ const base64ToBlob = async (dataURL) => {
   img.src = dataURL; // 设置图片源地址
   return new Promise((resolve, reject) => {
     img.onload = () => {
-      console.log('--logd--', img);
+      // console.log('--logd--', img);
       let canvas = document.createElement("canvas");
       let ctx = canvas.getContext("2d");
       canvas.height = img.height;
@@ -33,7 +33,7 @@ const base64ToBlob = async (dataURL) => {
       }, "image/jpeg", 0.3);
     };
     img.onerror = (err) => {
-      console.log('--err---', err);
+      // console.log('--err---', err);
       reject(err)
     };
   });
