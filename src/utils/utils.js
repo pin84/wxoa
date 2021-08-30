@@ -1,24 +1,46 @@
-const base64ToBlob = (imgURL, quality = 0.3) => {
+const base64ToBlob = async (imgURL, quality = 0.3) => {
   console.log('----00000---');
+
+  let img = await waitImgOnload(imgURL)
+
+
+  let canvas = document.createElement("canvas");
+  let ctx = canvas.getContext("2d");
+  canvas.height = img.height;
+  canvas.width = img.width;
+  ctx.drawImage(img, 0, 0, img.width, img.height);
+  console.log('----44444---');
+
   return new Promise((resolve, reject) => {
-    let img = new Image()
+    canvas.toBlob(
+      blob => {
+        console.log('-2--toBlob--');
+        resolve(blob);
+      },
+      "image/jpeg",
+      quality
+    );
+  })
+
+
+}
+
+const waitImgOnload = (url) => {
+  let img = new Image();
+  img.setAttribute("crossOrigin", "Anonymous");
+  img.src = url;
+  return new Promise((res, rej) => {
+    console.log('----11111---');
+
     img.onload = () => {
-      console.log('-1--onload--');
-      let canvas = document.createElement("canvas");
-      let ctx = canvas.getContext("2d");
-      canvas.height = img.height;
-      canvas.width = img.width;
-      ctx.drawImage(img, 0, 0, img.width, img.height);
-      canvas.toBlob(
-        blob => {
-          console.log('-2--toBlob--');
-          resolve(blob);
-        },
-        "image/jpeg",
-        quality
-      );
+      console.log('----2222---');
+      res(img);
     };
-    img.src = imgURL
+    img.onerror = () => {
+      console.log('----3333---');
+
+      rej("img");
+    };
   });
 }
 
