@@ -1,6 +1,7 @@
 import axios from 'axios'
 import qs from 'qs'
 import { baseURL  } from '../config/config';
+import { Toast } from 'vant';
 
 
 
@@ -16,6 +17,11 @@ const service = axios.create({
 // Add a request interceptor
 service.interceptors.request.use(function (config) {
   // Do something before request is sent
+  Toast.loading({
+    message: '加载中...',
+    forbidClick: true,
+    duration:0
+  });
 
   console.log('---config-==',config);
   return config;
@@ -28,6 +34,7 @@ service.interceptors.request.use(function (config) {
 service.interceptors.response.use(function (response) {
   // Any status code that lie within the range of 2xx cause this function to trigger
   // Do something with response data
+  Toast.clear()
   let {data} = response
 
   return data;

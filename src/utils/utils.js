@@ -1,3 +1,21 @@
+
+// base64数据的处理，主要针对IOS和安卓设备
+const base64RULHandler = (base64URL) => {
+  let imageBase64 = "";
+  if (base64URL.indexOf("data:image") == 0) {
+    //苹果的直接赋值，默认生成'data:image/jpeg;base64,'的头部拼接
+    imageBase64 = base64URL;
+  } else {
+    //此处是安卓中的唯一得坑！在拼接前需要对localData进行换行符的全局替换
+    //此时一个正常的base64图片路径就完美生成赋值到img的src中了
+    imageBase64 =
+      "data:image/jpeg;base64," + base64URL.replace(/\n/g, "");
+  }
+
+  return imageBase64
+}
+
+// base64 to bolb 使用前，必须对base64的URL进行得理。ios我安桌有区别
 const base64ToBlob = async (dataURL) => {
   var img = new Image();   // Create new img element
   img.setAttribute("crossOrigin", "Anonymous");
@@ -12,7 +30,7 @@ const base64ToBlob = async (dataURL) => {
       ctx.drawImage(img, 0, 0, img.width, img.height);
       canvas.toBlob(blob => {
         resolve(blob);
-      }, "image/jpeg",0.3);
+      }, "image/jpeg", 0.3);
     };
     img.onerror = (err) => {
       console.log('--err---', err);
@@ -54,5 +72,6 @@ const fileAppenToFormData = (file, fileName = 'fileName') => {
 export {
   blobToFile,
   fileAppenToFormData,
-  base64ToBlob
+  base64ToBlob,
+  base64RULHandler
 }

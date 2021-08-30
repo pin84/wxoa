@@ -19,7 +19,7 @@ import wx from 'weixin-js-sdk'
 import VConsole from 'vconsole';
 new VConsole();
 
-import {fileAppenToFormData,base64ToBlob} from '@/utils/utils.js'
+import {fileAppenToFormData,base64ToBlob,base64RULHandler} from '@/utils/utils.js'
 
 
 Vue.prototype.$api = api;
@@ -28,6 +28,7 @@ Vue.prototype.$post = post;
 Vue.prototype.$wx = wx;
 Vue.prototype.$fileAppenToFormData = fileAppenToFormData;
 Vue.prototype.$base64ToBlob = base64ToBlob;
+Vue.prototype.$base64RULHandler = base64RULHandler;
 
 
 Vue.config.productionTip = false
