@@ -1,16 +1,15 @@
-const base64ToBlob = async (dataURI) => {
+const base64ToBlob = async (dataURL) => {
   var img = new Image();   // Create new img element
-  img.onload = function () {
-    // 执行drawImage语句
-    console.log('--logd--',img);
-  }
-
-  img.onerror = function (err) {
-    console.log('--err---',err);
-  }
-  img.src = dataURI; // 设置图片源地址
-
-  return 'a'
+  img.setAttribute("crossOrigin", "Anonymous");
+  img.src = dataURL; // 设置图片源地址
+  return new Promise((res, rej) => {
+    img.onload = () => {
+      console.log('--logd--', img);
+    };
+    img.onerror = () => {
+      console.log('--err---', err);
+    };
+  });
 }
 
 
