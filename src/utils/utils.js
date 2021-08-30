@@ -22,18 +22,19 @@ const base64ToBlob = async (dataURL) => {
   img.src = dataURL; // 设置图片源地址
   return new Promise((resolve, reject) => {
     img.onload = () => {
-      // console.log('--logd--', img);
+      console.log('--onload--', img);
       let canvas = document.createElement("canvas");
       let ctx = canvas.getContext("2d");
       canvas.height = img.height;
       canvas.width = img.width;
       ctx.drawImage(img, 0, 0, img.width, img.height);
       canvas.toBlob(blob => {
+        console.log('- toBlob--',blob);
         resolve(blob);
       }, "image/jpeg", 0.3);
     };
     img.onerror = (err) => {
-      // console.log('--err---', err);
+      console.log('--err---', err);
       reject(err)
     };
   });

@@ -83,6 +83,7 @@ export default {
         let myFile = new File([blob], ts, {
           type: blob.type,
         });
+        console.log('--myFile--',myFile);
         let formData = this.$fileAppenToFormData(myFile);
         let res = await this.$post(this.$api.uploadImg, formData);
         str = res.data;

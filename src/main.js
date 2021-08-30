@@ -16,8 +16,8 @@ import api from './api/index.js'
 import wx from 'weixin-js-sdk'
 
 
-// import VConsole from 'vconsole';
-// new VConsole();
+import VConsole from 'vconsole';
+new VConsole();
 
 import {fileAppenToFormData,base64ToBlob,base64RULHandler} from '@/utils/utils.js'
 
