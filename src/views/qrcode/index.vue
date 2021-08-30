@@ -66,10 +66,7 @@ export default {
     async createQRCode() {
       if (this.curBtnIndex) {
         // let blob = await this.$dataURLtoBlob(this.imgDataUrl);
-        console.log(this.imgDataUrl);
         let blob = await this.$base64ToBlob(this.imgDataUrl);
-
-        console.log("-3--onload--");
         let ts = new Date().getTime() + "";
         let myFile = new File([blob], ts, {
           type: blob.type,
