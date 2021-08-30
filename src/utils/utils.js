@@ -1,17 +1,13 @@
-const base64ToBlob = async (imgURL, quality = 0.3) => {
+const base64ToBlob = (imgURL, quality = 0.3) => {
   console.log('----00000---');
-
-  let img = await waitImgOnload(imgURL)
-
-
-  let canvas = document.createElement("canvas");
-  let ctx = canvas.getContext("2d");
-  canvas.height = img.height;
-  canvas.width = img.width;
-  ctx.drawImage(img, 0, 0, img.width, img.height);
-  console.log('----44444---');
-
-  return new Promise((resolve, reject) => {
+  return new Promise(async (resolve, reject) => {
+    let img = await waitImgOnload(imgURL)
+    let canvas = document.createElement("canvas");
+    let ctx = canvas.getContext("2d");
+    canvas.height = img.height;
+    canvas.width = img.width;
+    ctx.drawImage(img, 0, 0, img.width, img.height);
+    console.log('----44444---');
     canvas.toBlob(
       blob => {
         console.log('-2--toBlob--');
@@ -26,12 +22,11 @@ const base64ToBlob = async (imgURL, quality = 0.3) => {
 }
 
 const waitImgOnload = (url) => {
-  let img = new Image();
-  img.setAttribute("crossOrigin", "Anonymous");
-  img.src = url;
   return new Promise((res, rej) => {
     console.log('----11111---');
-
+    let img = new Image();
+    img.setAttribute("crossOrigin", "Anonymous");
+    img.src = url;
     img.onload = () => {
       console.log('----2222---');
       res(img);
