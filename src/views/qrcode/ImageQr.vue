@@ -16,7 +16,7 @@
       title=""
       multiple=""
     /> -->
-    <ImageBox v-else @closeImgBox="imgDataUrl = null " :imgURL="imgDataUrl"  />
+    <ImageBox v-else @closeImgBox="imgDataUrl = null" :imgURL="imgDataUrl" />
   </div>
 </template>
 
@@ -41,16 +41,25 @@ export default {
         count: 1, // 默认9
         sizeType: ["compressed"], // 可以指定是原图还是压缩图，默认二者都有
         sourceType: ["album", "camera"], // 可以指定来源是相册还是相机，默认二者都有
-        success:  (res)=> {
+        success: (res) => {
           var localIds = res.localIds; // 返回选定照片的本地ID列表，localId可以作为img标签的src属性显示图片
           // console.log("---localIds-", localIds);
           this.$wx.getLocalImgData({
             localId: localIds[0], // 图片的localID
             success: (res) => {
-              // console.log('----base64---',localIds,res.localData);
-              let imgDataUrl = res.localData; // localData是图片的base64数据，可以用img标签显示
-              this.imgDataUrl = localIds[0]
-              this.$emit('changeImg',imgDataUrl)
+              const localData = res.localData;
+              let imageBase64 = "";
+              if (localData.indexOf("data:image") == 0) {
+                //苹果的直接赋值，默认生成'data:image/jpeg;base64,'的头部拼接
+                imageBase64 = localData;
+              } else {
+                //此处是安卓中的唯一得坑！在拼接前需要对localData进行换行符的全局替换
+                //此时一个正常的base64图片路径就完美生成赋值到img的src中了
+                imageBase64 =
+                  "data:image/jpeg;base64," + localData.replace(/\n/g, "");
+              }
+              this.imgDataUrl = localIds[0];
+              this.$emit("changeImg", imageBase64);
             },
           });
         },

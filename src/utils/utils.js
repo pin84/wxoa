@@ -6,7 +6,7 @@ const base64ToBlob = async (dataURL) => {
     img.onload = () => {
       console.log('--logd--', img);
     };
-    img.onerror = () => {
+    img.onerror = (err) => {
       console.log('--err---', err);
     };
   });
