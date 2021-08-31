@@ -3,16 +3,10 @@ import qs from 'qs'
 import { baseURL  } from '../config/config';
 import { Toast } from 'vant';
 
-
-
 const service = axios.create({
   baseURL,
-  timeout: 50000,
-  // headers: { 'Content-Type': 'multipart/form-data' }
+  timeout: 5000,
 })
-
-
-
 
 // Add a request interceptor
 service.interceptors.request.use(function (config) {
@@ -27,6 +21,7 @@ service.interceptors.request.use(function (config) {
   return config;
 }, function (error) {
   // Do something with request error
+  debugger
   return Promise.reject(error);
 });
 
@@ -41,6 +36,7 @@ service.interceptors.response.use(function (response) {
 }, function (error) {
   // Any status codes that falls outside the range of 2xx cause this function to trigger
   // Do something with response error
+  Toast.clear()
   return Promise.reject(error);
 });
 

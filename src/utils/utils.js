@@ -23,6 +23,7 @@ const base64ToBlob = async (dataURL) => {
   return new Promise((resolve, reject) => {
     img.onload = () => {
       console.log('--onload--', img);
+      console.log('----fileSize--',img.fileSize);
       let canvas = document.createElement("canvas");
       let ctx = canvas.getContext("2d");
       canvas.height = img.height;

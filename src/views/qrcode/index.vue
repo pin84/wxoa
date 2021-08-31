@@ -85,6 +85,9 @@ export default {
         });
         console.log('--myFile--',myFile);
         let formData = this.$fileAppenToFormData(myFile);
+        // let res  =await axios.post('http://localhost:3000/wx/upload',formData,{headers: {'Content-Type': 'multipart/form-data'}})
+        // str = res.data.data;
+
         let res = await this.$post(this.$api.uploadImg, formData);
         str = res.data;
       } else {
