@@ -23,6 +23,7 @@
 <script>
 import TextQr from "./TextQr.vue";
 import { dataURLtoBlob } from "@/utils/utils.js";
+import { Toast } from "vant";
 export default {
   data() {
     return {
@@ -44,13 +45,19 @@ export default {
         success: (res) => {
           var localIds = res.localIds; // 返回选定照片的本地ID列表，localId可以作为img标签的src属性显示图片
           console.log("---localIds-", localIds);
+          Toast.loading({
+            message: "加载中...",
+            forbidClick: true,
+          });
           this.$wx.getLocalImgData({
             localId: localIds[0], // 图片的localID
             success: (res) => {
+              console.log('--getLocalImgData-----');
               let imageBase64 = this.$base64RULHandler(res.localData);
-              console.log('------imageBase64 URL---',imageBase64);
+              console.log("------imageBase64 URL---", imageBase64);
               this.imgDataUrl = localIds[0];
               this.$emit("changeImg", imageBase64);
+              Toast.clear();
             },
           });
         },

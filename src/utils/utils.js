@@ -1,14 +1,15 @@
 
 // base64数据的处理，主要针对IOS和安卓设备
 const base64RULHandler = (base64URL) => {
-  console.log('-----utils----',base64URL);
   let imageBase64 = "";
   if (base64URL.indexOf("data:image") == 0) {
+    console.log('-----utils--ios--');
     //苹果的直接赋值，默认生成'data:image/jpeg;base64,'的头部拼接
     imageBase64 = base64URL;
   } else {
     //此处是安卓中的唯一得坑！在拼接前需要对localData进行换行符的全局替换
     //此时一个正常的base64图片路径就完美生成赋值到img的src中了
+    console.log('-----utils--安卓--');
     imageBase64 =
       "data:image/jpeg;base64," + base64URL.replace(/\n/g, "");
   }
