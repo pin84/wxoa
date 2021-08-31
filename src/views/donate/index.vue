@@ -23,13 +23,13 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-$w: 40vw;
+$w: 60vw;
 .support {
   display: flex;
   flex-direction: column;
   align-items: center;
   height: 100%;
-  padding-top: 10vh;
+  padding-top: 15vh;
   box-sizing: border-box;
   .qrcode-box {
     width: $w;
