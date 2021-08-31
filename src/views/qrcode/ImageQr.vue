@@ -54,8 +54,8 @@ export default {
             success: (res) => {
               console.log('--getLocalImgData-----');
               let imageBase64 = this.$base64RULHandler(res.localData);
-              console.log("------imageBase64 URL---", imageBase64);
-              this.imgDataUrl = localIds[0];
+              // console.log("------imageBase64 URL---", imageBase64);
+              this.imgDataUrl = imageBase64
               this.$emit("changeImg", imageBase64);
               Toast.clear();
             },
