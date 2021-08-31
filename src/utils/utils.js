@@ -1,6 +1,7 @@
 
 // base64数据的处理，主要针对IOS和安卓设备
 const base64RULHandler = (base64URL) => {
+  console.log('-----utils----',base64URL);
   let imageBase64 = "";
   if (base64URL.indexOf("data:image") == 0) {
     //苹果的直接赋值，默认生成'data:image/jpeg;base64,'的头部拼接
